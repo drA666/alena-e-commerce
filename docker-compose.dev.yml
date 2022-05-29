@@ -1,0 +1,59 @@
+version: '3.3'
+
+services:
+  database:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    env_file:
+      - env_file.env
+    networks:
+      - mainNet
+  pgadmin:
+    links:
+      - database:database
+    image: dpage/pgadmin4
+    ports:
+      - '5050:8080'
+    networks:
+      - mainNet
+    volumes:
+      - pgadminData:/root/.pgadmin
+    env_file:
+      - env_file.env
+  meilisearch:
+    image: getmeili/meilisearch
+    ports:
+      - '7711:7711'
+    networks:
+      - mainNet
+  ecom-client:
+    build:
+      context: ./ecom-client/
+      dockerfile: ClientDockerfile.dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./ecom-client:/usr/app
+    networks:
+      - mainNet
+    env_file:
+      - env_file.env
+  ecom-backend:
+    build:
+      context: ./ecom-backend/
+      dockerfile: BackendDockerfile.dev
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./backend:/usr/app
+    networks:
+      - mainNet
+    env_file:
+      - env_file.env
+
+networks:
+  mainNet:
+    driver: bridge
+volumes:
+  pgadminData:
