@@ -2,7 +2,6 @@ import { list } from '@keystone-6/core';
 import { text, password, select, relationship } from '@keystone-6/core/fields';
 import { UsersRolesValues } from '../consts/usersroles.const';
 import { UsersRoles } from '../enums/usersroles.enum';
-import { RolesValues } from '../consts/roles.const';
 import { filterCustomerAccess, filterCustomerAccessCreate } from '../shared'; 
 
 export const User = list({
