@@ -42,7 +42,7 @@ export const User = list({
         return;
       }
       const userId = item?.id;
-      await context.prisma.itemscart.create({
+      await context.prisma.ItemsCart.create({
         data: {
           user: { connect: { id: userId } },
         },
